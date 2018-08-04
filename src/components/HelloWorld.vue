@@ -3,29 +3,53 @@
       <div>
           <label>Name: </label>
             <input type="text" v-model="name"/>
-          <button @click="submitName()">Add</button>
+          <button @click="writeUserData()">Add</button>
+    </div>
+      
+      <div>
+          
+          <ul>
+              <li v-for="personName in users" >{{ personName.name }}</li>
+    
+        </ul>
+    
     </div>
   </div>
 </template>
 
+
 <script>
     
-import { namesRef } from '../firebase'
+//import { namesRef } from '../firebase'
+import { messagesRef } from '../firebase'
+import firebase from 'firebase'
     
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      name: 'paul'
+      name: ''
     }
   },
     methods: {
         submitName(){
-            namesRef.push({ name: this.name, edit: false })
+            messagesRef.push({ name: this.name, text: this.name })
+        },
+        writeUserData(){
+            firebase.database().ref('users/' + firebase.auth().currentUser.uid).push({
+                name: this.name, text: "yolo"
+            });
         }
+    },
+    firebase: {
+        users: firebase.database().ref('users/')
     }
 }
+    
+    
 </script>
+
+
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
@@ -37,7 +61,6 @@ ul {
   padding: 0;
 }
 li {
-  display: inline-block;
   margin: 0 10px;
 }
 a {
