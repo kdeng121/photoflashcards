@@ -9,11 +9,12 @@
       <div>
           
           <ul>
-              <li v-for="personName in users" >{{ personName.name }}</li>
-    
+              <li v-for="personName in flashcards" >{{ personName.name }}</li>
+              <b>Logged in as {{ username }} </b>
         </ul>
     
     </div>
+      <button @click="logout()"> LOG OUT</button>
   </div>
 </template>
 
@@ -21,14 +22,15 @@
 <script>
     
 //import { namesRef } from '../firebase'
-import { messagesRef } from '../firebase'
+//  import { messagesRef } from '../firebase'
 import firebase from 'firebase'
     
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      name: ''
+      name: '',
+      username: firebase.auth().currentUser.displayName
     }
   },
     methods: {
@@ -39,10 +41,21 @@ export default {
             firebase.database().ref('users/' + firebase.auth().currentUser.uid).push({
                 name: this.name, text: "yolo"
             });
+        },
+        logout: function(){
+            firebase.auth().signOut().then(() => {
+                this.$router.replace('login')
+            })
         }
     },
-    firebase: {
-        users: firebase.database().ref('users/')
+//    firebase: {
+//        users: firebase.database().ref('users/' + firebase.auth().currentUser.uid)
+//    }
+    firebase(){
+        const userId = firebase.auth().currentUser.uid
+        return{
+            flashcards: firebase.database().ref('users').child(userId)
+        }
     }
 }
     
