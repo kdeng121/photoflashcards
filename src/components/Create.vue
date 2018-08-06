@@ -49,20 +49,30 @@ export default {
             const userId = firebase.auth().currentUser.uid;
             var newSetKey = firebase.database().ref().child('users').child(userId).push().key;
             
-            firebase.database().ref('users').child(userId).child('sets').child(newSetKey).push({
-                term: this.term, definition: this.definition
-            });
+            var card;
+            for (card in this.$data.cards){
+                console.log("this works!")
+            }
+            
+//            firebase.database().ref('users').child(userId).child('sets').child(newSetKey).push({
+//                term: this.term, definition: this.definition
+//            });
             
         },
         
         newCard(){
-            //add a new card-field component
+            //create a new card-field component, add to UI
             var ComponentClass = Vue.extend(CardField)
             var instance = new ComponentClass({
                 propsData: {term: 'newCard', definition: 'newCard'}
             })
-            instance.$mount()
-            this.$refs.container.appendChild(instance.$el)
+            //instance.$mount()
+            //this.$refs.container.appendChild(instance.$el)
+            
+            //add to cards[] array
+            this.cards.push(instance)
+
+            
         }
     },
     components: {
