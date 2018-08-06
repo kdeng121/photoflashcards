@@ -1,10 +1,10 @@
 <template>
   <div class="hello">
-      <div>
-          <label>Name: </label>
-            <input type="text" v-model="name"/>
-          <button @click="writeUserData()">Add</button>
-    </div>
+          <div>
+              <label>Name: </label>
+                <input type="text" v-model="name"/>
+              <button @click="writeUserData()">Add</button>
+        </div>
       
       <div>
           

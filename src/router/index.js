@@ -4,12 +4,13 @@ import firebase from 'firebase'
 
 import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
+import Create from '@/components/Create'
 
 Vue.use(Router)
 
 let router = new Router({
-  routes: [
-    {
+    routes: [
+        {
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld,
@@ -26,6 +27,14 @@ let router = new Router({
       {
           path: '*',
           redirect: '/login'
+      },
+      {
+          path: '/create',
+          name: 'Create',
+          component: Create,
+          meta: {
+              requiresAuth: true
+          }
       }
   ]
 })
