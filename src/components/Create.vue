@@ -48,16 +48,12 @@ export default {
         createSet(){
             const userId = firebase.auth().currentUser.uid;
             var newSetKey = firebase.database().ref().child('users').child(userId).push().key;
-            
-            var card;
-            for (card in this.$data.cards){
-                console.log("this works!")
-            }
-            
-//            firebase.database().ref('users').child(userId).child('sets').child(newSetKey).push({
-//                term: this.term, definition: this.definition
-//            });
-            
+            var cardIndex;
+            for (cardIndex in this.cards){
+                firebase.database().ref('users').child(userId).child('sets').child(newSetKey).push({
+                    term: this.cards[cardIndex].term, definition: this.cards[cardIndex].definition
+                })
+            }            
         },
         
         newCard(){
